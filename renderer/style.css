@@ -1,0 +1,168 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif;
+}
+
+body{
+  background:#0f172a;
+  color:#fff;
+  min-height:100vh;
+}
+
+.container{
+  width:95%;
+  max-width:1400px;
+  margin:auto;
+  padding:30px;
+}
+
+header{
+  margin-bottom:30px;
+}
+
+header h1{
+  font-size:2rem;
+  margin-bottom:8px;
+}
+
+header p{
+  color:#94a3b8;
+}
+
+.card{
+  background:#1e293b;
+  border-radius:16px;
+  padding:25px;
+  margin-bottom:25px;
+  box-shadow:0 4px 15px rgba(0,0,0,.25);
+}
+
+.card h2{
+  margin-bottom:20px;
+}
+
+.form-group{
+  margin-bottom:18px;
+}
+
+.form-group label{
+  display:block;
+  margin-bottom:8px;
+  color:#cbd5e1;
+}
+
+.form-group input{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  background:#334155;
+  color:white;
+  font-size:15px;
+}
+
+.form-group input:focus{
+  outline:2px solid #3b82f6;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.buttons{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+button{
+  border:none;
+  border-radius:10px;
+  padding:14px 20px;
+  cursor:pointer;
+  font-size:15px;
+  font-weight:600;
+}
+
+#btnAdicionar{
+  background:#2563eb;
+  color:white;
+}
+
+#btnAdicionar:hover{
+  background:#1d4ed8;
+}
+
+.secondary{
+  background:#475569;
+  color:white;
+}
+
+.secondary:hover{
+  background:#64748b;
+}
+
+.table-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th{
+  background:#334155;
+  padding:14px;
+  text-align:left;
+}
+
+td{
+  padding:14px;
+  border-bottom:1px solid #334155;
+}
+
+.status{
+  padding:6px 12px;
+  border-radius:20px;
+  font-weight:bold;
+  text-align:center;
+}
+
+.alerta60{
+  background:#facc15;
+  color:black;
+}
+
+.alerta30{
+  background:#fb923c;
+  color:black;
+}
+
+.alerta15{
+  background:#ef4444;
+  color:white;
+}
+
+.actions{
+  display:flex;
+  justify-content:flex-end;
+}
+
+#btnPdf{
+  background:#16a34a;
+  color:white;
+  padding:16px 30px;
+  font-size:16px;
+}
+
+#btnPdf:hover{
+  background:#15803d;
+}
