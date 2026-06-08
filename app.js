@@ -1,15 +1,7 @@
-const { app, BrowserWindow } = require("electron");
-const path = require("path");
-
-function criarJanela() {
-  const janela = new BrowserWindow({
-    width: 1000,
-    height: 700,
-  });
-
-  janela.loadFile("./renderer/index.html");
-}
+const { app } = require('electron');
+const { criarJanela, registrarHandlers } = require('./controls/brainElectron/brainElectron.js');
 
 app.whenReady().then(() => {
+  registrarHandlers(); // IPC precisa estar registrado antes da janela abrir
   criarJanela();
 });
