@@ -13,22 +13,31 @@ function renderizarTabela() {
   const tabela = document.getElementById('tabelaProdutos');
   tabela.innerHTML = '';
 
-  produtos.forEach(produto => {
+  produtos.forEach((produto, index) => {
     let classeStatus = '';
     if (produto.status === 'ATENÇÃO')  classeStatus = 'alerta60';
     if (produto.status === 'ALERTA')   classeStatus = 'alerta30';
     if (produto.status === 'CRÍTICO')  classeStatus = 'alerta15';
 
-    tabela.innerHTML += `
-      <tr>
-        <td>${produto.codigo}</td>
-        <td>${produto.descricao}</td>
-        <td>${produto.validade}</td>
-        <td>${produto.diasRestantes}</td>
-        <td>${produto.quantidade}</td>
-        <td><span class="status ${classeStatus}">${produto.status}</span></td>
-      </tr>
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${produto.codigo}</td>
+      <td>${produto.descricao}</td>
+      <td>${produto.validade}</td>
+      <td>${produto.diasRestantes}</td>
+      <td>${produto.quantidade}</td>
+      <td><span class="status ${classeStatus}">${produto.status}</span></td>
+      <td>
+        <button class="btn-excluir" title="Remover produto">🗑️</button>
+      </td>
     `;
+
+    tr.querySelector('.btn-excluir').addEventListener('click', () => {
+      produtos.splice(index, 1);
+      renderizarTabela();
+    });
+
+    tabela.appendChild(tr);
   });
 
   document.getElementById('totalProdutos').textContent = `${produtos.length} produto(s)`;

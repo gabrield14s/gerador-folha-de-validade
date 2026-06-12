@@ -156,6 +156,20 @@ td{
   justify-content:flex-end;
 }
 
+.btn-excluir {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.btn-excluir:hover {
+  background: rgba(231, 76, 60, 0.2);
+}
+
 #btnPdf{
   background:#16a34a;
   color:white;
