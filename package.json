@@ -1,21 +1,37 @@
 {
   "name": "gerador-folha-de-validade",
   "version": "1.0.0",
-  "description": "",
+  "description": "Aplicação desktop para geração padronizada de folhas de validade em supermercados.",
   "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
-  },
-  "dependencies": {
-    "electron": "^42.3.3",
-    "pdfkit": "^0.18.0"
-  },
-  "keywords": [],
-  "author": "",
+  "author": "gabrield14s",
   "license": "ISC",
   "type": "commonjs",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "dependencies": {
+    "pdfkit": "^0.18.0"
+  },
   "devDependencies": {
-    "electron": "^42.3.3"
+    "electron": "^42.3.3",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.gabrield14s.geradorfolhavalidade",
+    "productName": "Gerador de Folha de Validade",
+    "win": {
+      "target": "nsis"
+    },
+    "files": [
+      "app.js",
+      "brainElectron.js",
+      "renderer/**/*",
+      "controls/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist"
+    }
   }
 }
