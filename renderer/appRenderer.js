@@ -4,9 +4,56 @@ const { ipcRenderer } = require('electron');
 const { calcularDiasRestantes } = require('../controls/validade/calcularDiasRestantes');
 const { obterStatus }           = require('../controls/validade/obterStatus');
 const { limparCampos }          = require('../controls/UI/limparCampos');
+const { mostrarErro }           = require('../controls/UI/mostrarErro');
 
 // ── Estado global ──────────────────────────────────────────────
 let produtos = [];
+
+// ─── Lógica do Modal ──────────────────────────────────────────────]
+
+// índice do produto sendo editado
+let indexEdicao = null;
+
+function abrirModal(index) {
+  const produto = produtos[index];
+  indexEdicao = index;
+
+  document.getElementById('editCodigo').value    = produto.codigo;
+  document.getElementById('editDescricao').value = produto.descricao;
+  document.getElementById('editValidade').value  = produto.validade;
+  document.getElementById('editQuantidade').value = produto.quantidade;
+
+  document.getElementById('modalOverlay').classList.add('ativo');
+}
+
+function fecharModal() {
+  indexEdicao = null;
+  document.getElementById('modalOverlay').classList.remove('ativo');
+}
+
+document.getElementById('btnSalvarEdicao').addEventListener('click', () => {
+  const validade     = document.getElementById('editValidade').value;
+  const diasRestantes = calcularDiasRestantes(validade);
+
+  produtos[indexEdicao] = {
+    codigo:       document.getElementById('editCodigo').value.trim(),
+    descricao:    document.getElementById('editDescricao').value.trim(),
+    validade,
+    quantidade:   Number(document.getElementById('editQuantidade').value),
+    diasRestantes,
+    status:       obterStatus(diasRestantes),
+  };
+
+  renderizarTabela();
+  fecharModal();
+});
+
+document.getElementById('btnCancelarEdicao').addEventListener('click', fecharModal);
+
+// fecha ao clicar fora do modal
+document.getElementById('modalOverlay').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('modalOverlay')) fecharModal();
+});
 
 // ── Funções que dependem do estado local ──────────────────────
 function renderizarTabela() {
@@ -27,11 +74,11 @@ function renderizarTabela() {
       <td>${produto.diasRestantes}</td>
       <td>${produto.quantidade}</td>
       <td><span class="status ${classeStatus}">${produto.status}</span></td>
-      <td>
-        <button class="btn-excluir" title="Remover produto">🗑️</button>
-      </td>
+      <td><button class="btn-excluir" title="Remover produto">🗑️</button></td>
+      <td><button class="btn-editar" title="Editar produto">✏️</button></td>
     `;
 
+    tr.querySelector('.btn-editar').addEventListener('click', () => abrirModal(index));
     tr.querySelector('.btn-excluir').addEventListener('click', () => {
       produtos.splice(index, 1);
       renderizarTabela();
@@ -50,14 +97,14 @@ function adicionarProduto() {
   const quantidade = Number(document.getElementById('quantidade').value);
 
   if (!codigo || !descricao || !validade || !quantidade) {
-    alert('Preencha todos os campos.');
+    mostrarErro('Preencha todos os campos.');
     return;
   }
 
   const diasRestantes = calcularDiasRestantes(validade);
 
   if (diasRestantes > 60) {
-    alert(`Este produto possui ${diasRestantes} dias para vencer.\n\nEle não precisa entrar na folha de validade.`);
+    mostrarErro('Validade deve ser inferior a 60 dias.');
     return;
   }
 
@@ -81,7 +128,7 @@ document.getElementById('btnLimpar').addEventListener('click', limparCampos);
 
 document.getElementById('btnPdf').addEventListener('click', async () => {
   if (produtos.length === 0) {
-    alert('Nenhum produto adicionado.');
+    mostrarErro('Adicione pelo menos um produto para gerar o PDF.');
     return;
   }
 
